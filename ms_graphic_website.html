@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MS GRAPHIC — Creative Design Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #f5f0e8;
+  --gold: #e8b84b;
+  --gold-dim: #a07c28;
+  --red: #d94f3d;
+  --mid: #1a1a1a;
+  --muted: #888;
+  --border: #2a2a2a;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Custom cursor */
+.cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s;
+  transform: translate(-50%, -50%);
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease, width 0.2s, height 0.2s, opacity 0.2s;
+  opacity: 0.6;
+}
+body:has(a:hover) .cursor-ring,
+body:has(button:hover) .cursor-ring { width: 52px; height: 52px; opacity: 1; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 28px;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--gold); }
+
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+  cursor: none;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+.nav-cta {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  background: transparent;
+  cursor: none;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-cta:hover { background: var(--gold); color: var(--black); }
+
+/* ── PAGES ── */
+.page { display: none; min-height: 100vh; padding-top: 80px; }
+.page.active { display: block; }
+
+/* ═══════════════════════════════
+   HOME PAGE
+═══════════════════════════════ */
+.hero {
+  min-height: calc(100vh - 80px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 0 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated grid bg */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(232,184,75,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232,184,75,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridMove 20s linear infinite;
+}
+@keyframes gridMove {
+  from { background-position: 0 0; }
+  to { background-position: 60px 60px; }
+}
+
+.hero-left { position: relative; z-index: 2; }
+
+.hero-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-tag::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.hero-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(72px, 8vw, 120px);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+.hero-title .accent { color: var(--gold); }
+.hero-title .outline {
+  -webkit-text-stroke: 2px var(--white);
+  color: transparent;
+}
+
+.hero-sub {
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 420px;
+  margin-bottom: 44px;
+}
+
+.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+.btn-primary {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  cursor: none;
+  font-weight: 700;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232,184,75,0.35); }
+
+.btn-secondary {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--white);
+  border: 1px solid var(--border);
+  cursor: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-secondary:hover { border-color: var(--white); }
+
+/* Hero right — decorative design element */
+.hero-right {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.design-showcase {
+  position: relative;
+  width: 420px; height: 500px;
+}
+
+.ds-card {
+  position: absolute;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.ds-card:nth-child(1) {
+  width: 260px; height: 320px;
+  top: 0; right: 40px;
+  background: var(--mid);
+  animation: float1 6s ease-in-out infinite;
+}
+.ds-card:nth-child(2) {
+  width: 200px; height: 240px;
+  bottom: 20px; left: 20px;
+  background: #141414;
+  animation: float2 7s ease-in-out infinite;
+  border-color: var(--gold-dim);
+}
+.ds-card:nth-child(3) {
+  width: 120px; height: 120px;
+  top: 120px; left: 40px;
+  background: var(--gold);
+  animation: float3 5s ease-in-out infinite;
+}
+
+@keyframes float1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+@keyframes float2 { 0%,100%{transform:translateY(0) rotate(-2deg)} 50%{transform:translateY(-8px) rotate(-2deg)} }
+@keyframes float3 { 0%,100%{transform:translateY(0) rotate(4deg)} 50%{transform:translateY(-16px) rotate(4deg)} }
+
+.ds-card:nth-child(1)::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 20px,
+    rgba(232,184,75,0.04) 20px,
+    rgba(232,184,75,0.04) 21px
+  );
+}
+
+.ds-inner { padding: 20px; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; }
+.ds-label {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 36px;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  line-height: 1;
+}
+.ds-sub { font-size: 11px; color: var(--muted); margin-top: 6px; font-family: 'Space Mono', monospace; }
+
+.ds-card:nth-child(3) .ds-inner { justify-content: center; align-items: center; }
+.ds-card:nth-child(3) .ds-icon {
+  font-size: 42px;
+  color: var(--black);
+  font-family: 'Bebas Neue', cursive;
+  letter-spacing: 0.02em;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Stats strip */
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin: 0 48px 80px;
+}
+.stat {
+  padding: 36px 28px;
+  border-right: 1px solid var(--border);
+  animation: fadeUp 0.6s ease both;
+}
+.stat:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 52px;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+.stat-label { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+/* Services */
+.section { padding: 80px 48px; }
+.section-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 56px;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  margin-bottom: 48px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.service-item {
+  background: var(--black);
+  padding: 40px 32px;
+  transition: background 0.25s;
+  cursor: none;
+}
+.service-item:hover { background: var(--mid); }
+
+.service-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  margin-bottom: 24px;
+  opacity: 0.7;
+}
+.service-icon {
+  width: 48px; height: 48px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+  transition: border-color 0.2s;
+}
+.service-item:hover .service-icon { border-color: var(--gold); }
+.service-name {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 26px;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+.service-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+/* Marquee */
+.marquee-wrap {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+  margin-bottom: 80px;
+}
+.marquee-track {
+  display: flex;
+  gap: 60px;
+  animation: marquee 18s linear infinite;
+  white-space: nowrap;
+}
+.marquee-item {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 32px;
+  letter-spacing: 0.1em;
+  color: var(--border);
+  flex-shrink: 0;
+}
+.marquee-item span { color: var(--gold); margin-right: 60px; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ═══════════════════════════════
+   PORTFOLIO PAGE
+═══════════════════════════════ */
+.portfolio-header {
+  padding: 60px 48px 40px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.portfolio-header h1 {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 72px;
+  letter-spacing: 0.04em;
+  line-height: 0.9;
+}
+.portfolio-header h1 span { color: var(--gold); }
+
+.filter-bar {
+  display: flex; gap: 4px;
+}
+.filter-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  cursor: none;
+  transition: all 0.15s;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--gold);
+  color: var(--black);
+  border-color: var(--gold);
+  font-weight: 700;
+}
+
+/* Portfolio masonry grid */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin: 1px;
+}
+
+.port-item {
+  background: var(--mid);
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+}
+
+.port-item:nth-child(1) { aspect-ratio: 2/1; grid-column: span 2; }
+.port-item:nth-child(5) { aspect-ratio: 2/1; grid-column: span 2; }
+.port-item:nth-child(7) { aspect-ratio: 1/1.5; grid-row: span 2; }
+
+.port-bg {
+  position: absolute; inset: 0;
+  transition: transform 0.5s ease;
+}
+.port-item:hover .port-bg { transform: scale(1.06); }
+
+/* Unique color palettes per item */
+.port-item:nth-child(1) .port-bg {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a3a5c 50%, #0a0a0a 100%);
+}
+.port-item:nth-child(2) .port-bg {
+  background: linear-gradient(135deg, #1a0a00 0%, #8b3a0f 100%);
+}
+.port-item:nth-child(3) .port-bg {
+  background: linear-gradient(135deg, #0d0d1a 0%, #2d1f5e 100%);
+}
+.port-item:nth-child(4) .port-bg {
+  background: linear-gradient(135deg, #0a1a0a 0%, #1a4a1a 100%);
+}
+.port-item:nth-child(5) .port-bg {
+  background: linear-gradient(135deg, #1a1a00 0%, #5a4a0a 50%, #d4a017 100%);
+}
+.port-item:nth-child(6) .port-bg {
+  background: linear-gradient(135deg, #1a0a0a 0%, #5a1010 100%);
+}
+.port-item:nth-child(7) .port-bg {
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 50%, #0a0a0a 100%);
+}
+.port-item:nth-child(8) .port-bg {
+  background: linear-gradient(135deg, #1a1010 0%, #3a2020 100%);
+}
+.port-item:nth-child(9) .port-bg {
+  background: linear-gradient(135deg, #0a0a0a 0%, #2a2a2a 100%);
+}
+
+/* Decorative elements inside cards */
+.port-deco {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.port-shape {
+  width: 80px; height: 80px;
+  border: 2px solid rgba(255,255,255,0.15);
+  margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 28px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+.port-shape::before {
+  content: '';
+  position: absolute;
+  width: 60%; height: 60%;
+  background: rgba(232,184,75,0.1);
+}
+
+.port-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex; align-items: flex-end; padding: 24px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.port-item:hover .port-overlay { opacity: 1; }
+
+.port-info { width: 100%; }
+.port-cat {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.port-name {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 24px;
+  letter-spacing: 0.06em;
+  color: var(--white);
+}
+
+/* Large decorative visuals */
+.port-item:nth-child(1) .port-deco::before {
+  content: 'EVENT POSTER';
+  font-family: 'Bebas Neue', cursive;
+  font-size: 64px;
+  color: rgba(232,184,75,0.12);
+  position: absolute;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.port-visual {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', cursive;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.08);
+  font-size: 52px;
+  position: absolute;
+}
+
+/* ═══════════════════════════════
+   OFFERS PAGE
+═══════════════════════════════ */
+.offers-hero {
+  padding: 70px 48px 50px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.offers-hero::before {
+  content: 'SALE';
+  position: absolute;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 400px;
+  color: rgba(232,184,75,0.03);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+.offers-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.pulse-dot {
+  width: 8px; height: 8px;
+  background: var(--red);
+  border-radius: 50%;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(217,79,61,0.6); }
+  50% { box-shadow: 0 0 0 8px rgba(217,79,61,0); }
+}
+
+.offers-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(48px, 7vw, 90px);
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  margin-bottom: 20px;
+}
+.offers-title .red { color: var(--red); }
+
+.offers-sub {
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 500px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+
+/* Countdown */
+.countdown-wrap {
+  display: inline-flex; gap: 0;
+  border: 1px solid var(--border);
+  margin-bottom: 60px;
+  overflow: hidden;
+}
+.cd-unit {
+  padding: 20px 28px;
+  border-right: 1px solid var(--border);
+  text-align: center;
+  min-width: 90px;
+  background: var(--mid);
+}
+.cd-unit:last-child { border-right: none; }
+.cd-num {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 48px;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+}
+.cd-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-top: 4px;
+}
+
+/* Offer cards */
+.offers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin: 0 48px;
+  border: 1px solid var(--border);
+}
+
+.offer-card {
+  background: var(--black);
+  padding: 40px 32px 36px;
+  position: relative;
+  transition: background 0.2s;
+  cursor: none;
+}
+.offer-card:hover { background: #111; }
+
+.offer-card.featured {
+  background: var(--mid);
+  border: 1px solid var(--gold-dim);
+  margin: -1px;
+}
+
+.offer-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  display: inline-block;
+  margin-bottom: 28px;
+}
+.badge-hot { background: var(--red); color: #fff; }
+.badge-popular { background: var(--gold); color: var(--black); font-weight: 700; }
+.badge-value { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+
+.offer-name {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 32px;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.offer-price-wrap { display: flex; align-items: baseline; gap: 10px; margin-bottom: 24px; }
+.offer-old {
+  font-size: 18px;
+  color: var(--muted);
+  text-decoration: line-through;
+  font-weight: 300;
+}
+.offer-price {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 52px;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.offer-currency { font-size: 22px; color: var(--gold); align-self: flex-start; margin-top: 10px; font-family: 'Bebas Neue', cursive; }
+.offer-save {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--red);
+  letter-spacing: 0.1em;
+}
+
+.offer-features { list-style: none; margin-bottom: 32px; }
+.offer-features li {
+  font-size: 14px;
+  color: var(--muted);
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+  line-height: 1.5;
+}
+.offer-features li:last-child { border-bottom: none; }
+.check {
+  width: 16px; height: 16px;
+  border: 1px solid var(--gold);
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 9px;
+  color: var(--gold);
+}
+
+.offer-btn {
+  display: block; width: 100%;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 14px;
+  text-align: center;
+  cursor: none;
+  transition: all 0.2s;
+  border: none;
+}
+.offer-btn-gold { background: var(--gold); color: var(--black); font-weight: 700; }
+.offer-btn-gold:hover { box-shadow: 0 6px 24px rgba(232,184,75,0.4); transform: translateY(-1px); }
+.offer-btn-outline { background: transparent; color: var(--white); border: 1px solid var(--border); }
+.offer-btn-outline:hover { border-color: var(--white); }
+
+/* guarantee strip */
+.guarantee-strip {
+  margin: 60px 48px 0;
+  padding: 32px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.guarantee-item {
+  display: flex; align-items: center; gap: 14px;
+}
+.g-icon {
+  font-size: 28px;
+  width: 48px; height: 48px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.g-label { font-family: 'Bebas Neue', cursive; font-size: 18px; letter-spacing: 0.06em; }
+.g-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* Contact CTA */
+.contact-cta {
+  margin: 60px 48px 80px;
+  padding: 60px;
+  background: var(--mid);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.cta-text h2 {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 48px;
+  letter-spacing: 0.04em;
+}
+.cta-text h2 span { color: var(--gold); }
+.cta-text p { font-size: 15px; color: var(--muted); margin-top: 8px; }
+.cta-phone {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 32px;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+.cta-phone-sub { font-size: 12px; color: var(--muted); text-align: right; font-family: 'Space Mono', monospace; letter-spacing: 0.1em; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-logo { font-family: 'Bebas Neue', cursive; font-size: 22px; letter-spacing: 0.1em; }
+.footer-logo span { color: var(--gold); }
+.footer-copy { font-size: 12px; color: var(--muted); font-family: 'Space Mono', monospace; }
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up { animation: fadeUp 0.6s ease both; }
+.fade-up:nth-child(2) { animation-delay: 0.1s; }
+.fade-up:nth-child(3) { animation-delay: 0.2s; }
+.fade-up:nth-child(4) { animation-delay: 0.3s; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--border); }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')"><span>MS</span> GRAPHIC</a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a href="#" onclick="showPage('portfolio')" id="nav-portfolio">Portfolio</a></li>
+    <li><a href="#" onclick="showPage('offers')" id="nav-offers">Special Offers</a></li>
+  </ul>
+  <button class="nav-cta" onclick="showPage('offers')">View Offers</button>
+</nav>
+
+<!-- ══════════ HOME PAGE ══════════ -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-tag">Creative Design Studio</div>
+      <h1 class="hero-title">
+        We Make<br>
+        <span class="accent">Brands</span><br>
+        <span class="outline">Unforgettable</span>
+      </h1>
+      <p class="hero-sub">From event posters to full brand identities — MS Graphic crafts visuals that stop people in their tracks.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('portfolio')">See Our Work</button>
+        <button class="btn-secondary" onclick="showPage('offers')">View Offers →</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="design-showcase">
+        <div class="ds-card">
+          <div class="ds-inner">
+            <div class="ds-label">Brand Identity</div>
+            <div class="ds-sub">// 2026 collection</div>
+          </div>
+        </div>
+        <div class="ds-card">
+          <div class="ds-inner">
+            <div class="ds-label">Event Posters</div>
+            <div class="ds-sub">// print & digital</div>
+          </div>
+        </div>
+        <div class="ds-card">
+          <div class="ds-icon">MS</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats-strip">
+    <div class="stat fade-up">
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Projects Completed</div>
+    </div>
+    <div class="stat fade-up">
+      <div class="stat-num">200+</div>
+      <div class="stat-label">Happy Clients</div>
+    </div>
+    <div class="stat fade-up">
+      <div class="stat-num">5+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat fade-up">
+      <div class="stat-num">24H</div>
+      <div class="stat-label">Fast Turnaround</div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section class="section">
+    <div class="section-eyebrow">What We Do</div>
+    <div class="section-title">Our Services</div>
+    <div class="services-grid">
+      <div class="service-item">
+        <div class="service-num">01 —</div>
+        <div class="service-icon">🎨</div>
+        <div class="service-name">Event Posters</div>
+        <div class="service-desc">Eye-catching designs for tournaments, concerts, galas, and community events. Print-ready files included.</div>
+      </div>
+      <div class="service-item">
+        <div class="service-num">02 —</div>
+        <div class="service-icon">🏷️</div>
+        <div class="service-name">Brand Identity</div>
+        <div class="service-desc">Logos, colour palettes, typography systems and brand guidelines that make your business memorable.</div>
+      </div>
+      <div class="service-item">
+        <div class="service-num">03 —</div>
+        <div class="service-icon">📱</div>
+        <div class="service-name">Social Media</div>
+        <div class="service-desc">Post designs, stories, covers and ad creatives optimised for Instagram, Facebook and WhatsApp.</div>
+      </div>
+      <div class="service-item">
+        <div class="service-num">04 —</div>
+        <div class="service-icon">🖼️</div>
+        <div class="service-name">Banners & Signage</div>
+        <div class="service-desc">Outdoor banners, roll-up stands, A-frames and event backdrops ready for any print size.</div>
+      </div>
+      <div class="service-item">
+        <div class="service-num">05 —</div>
+        <div class="service-icon">📄</div>
+        <div class="service-name">Flyers & Brochures</div>
+        <div class="service-desc">Promotional print materials that communicate your message clearly and drive real results.</div>
+      </div>
+      <div class="service-item">
+        <div class="service-num">06 —</div>
+        <div class="service-icon">🏆</div>
+        <div class="service-name">Sports Graphics</div>
+        <div class="service-desc">Tournament flyers, trophy graphics, team kits, and championship branding for all sports.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Event Posters <span>✦</span></span>
+      <span class="marquee-item">Brand Identity <span>✦</span></span>
+      <span class="marquee-item">Social Media <span>✦</span></span>
+      <span class="marquee-item">Banners <span>✦</span></span>
+      <span class="marquee-item">Sports Graphics <span>✦</span></span>
+      <span class="marquee-item">Logo Design <span>✦</span></span>
+      <span class="marquee-item">Print Materials <span>✦</span></span>
+      <span class="marquee-item">Event Posters <span>✦</span></span>
+      <span class="marquee-item">Brand Identity <span>✦</span></span>
+      <span class="marquee-item">Social Media <span>✦</span></span>
+      <span class="marquee-item">Banners <span>✦</span></span>
+      <span class="marquee-item">Sports Graphics <span>✦</span></span>
+      <span class="marquee-item">Logo Design <span>✦</span></span>
+      <span class="marquee-item">Print Materials <span>✦</span></span>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="contact-cta" style="margin: 0 48px 80px;">
+    <div class="cta-text">
+      <h2>Ready to Start<br>Your <span>Project?</span></h2>
+      <p>Fast delivery. Professional results. Affordable prices.</p>
+    </div>
+    <div>
+      <div class="cta-phone">070 285 6831</div>
+      <div class="cta-phone-sub" style="text-align:left; margin-top:4px;">0741 557 952</div>
+      <button class="btn-primary" style="margin-top:20px; width:100%;" onclick="showPage('offers')">See Offers →</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo"><span>MS</span> GRAPHIC</div>
+    <div class="footer-copy">© 2026 MS Graphic. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ══════════ PORTFOLIO PAGE ══════════ -->
+<div id="page-portfolio" class="page">
+  <div class="portfolio-header">
+    <h1>Our<br><span>Work</span></h1>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterPort(this,'all')">All</button>
+      <button class="filter-btn" onclick="filterPort(this,'poster')">Posters</button>
+      <button class="filter-btn" onclick="filterPort(this,'brand')">Branding</button>
+      <button class="filter-btn" onclick="filterPort(this,'social')">Social</button>
+      <button class="filter-btn" onclick="filterPort(this,'sports')">Sports</button>
+    </div>
+  </div>
+
+  <div class="portfolio-grid" id="portfolio-grid">
+    <div class="port-item" data-cat="sports poster">
+      <div class="port-bg"></div>
+      <div class="port-deco">
+        <div class="port-shape" style="width:120px;height:120px;border-radius:50%;">CK</div>
+        <div style="font-family:'Bebas Neue',cursive;font-size:28px;color:rgba(255,255,255,0.25);letter-spacing:0.06em;">CRICKET TOURNAMENT</div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-info">
+          <div class="port-cat">Sports / Poster</div>
+          <div class="port-name">Cricket Tournament 2026</div>
+        </div>
+      </div>
+    </div>
+    <div class="port-item" data-cat="brand">
+      <div class="port-bg"></div>
+      <div class="port-deco">
+        <div class="port-shape" style="border-radius:0;transform:rotate(45deg);border-color:rgba(217,79,61,0.4);">
+          <span style="transform:rotate(-45deg)">BX</span>
+        </div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-info">
+          <div class="port-cat">Brand Identity</div>
+          <div class="port-name">Boxing Club Rebrand</div>
+        </div>
+      </div>
+    </div>
+    <div class="port-item" data-cat="social">
+      <div class="port-bg"></div>
+      <div class="port-deco">
+        <div style="font-family:'Bebas Neue',cursive;font-size:52px;color:rgba(255,255,255,0.15);line-height:1;">SOCIAL<br>POST</div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-info">
+          <div class="port-cat">Social Media</div>
+          <div class="port-name">Promotional Campaign</div>
+        </div>
+      </div>
+    </div>
+    <div class="port-item" data-cat="poster">
+      <div class="port-bg"></div>
+      <div class="port-deco">
+        <div class="port-shape" style="width:100px;height:140px;">EV</div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-info">
+          <div class="port-cat">Event Poster</div>
+          <div class="port-name">Music Night Flyer</div>
+        </div>
+      </div>
+    </div>
+    <div class="port-item" data-cat="brand poster">
+      <div class="port-bg"></div>
+      <div class="port-deco">
+        <div style="font-family:'Bebas Neue',cursive;font-size:68px;color:rgba(232,184,75,0.15);text-align:center;line-height:1;">BRAND<br>GOLD</div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-info">
+          <div class="port-cat">Branding / Print</div>
+          <div class="port-name">Luxury Brand Launch</div>
+        </div>
+      </div>
+    </div>
+    <div class="port-item" data-cat="social">
+      <div class="port-bg"></div>
+      <div class="port-deco">
+        <div class="port-shape" style="border-radius:4px;width:90px;height:90px;border-color:rgba(217,79,61,0.4);">SM</div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-info">
+          <div class="port-cat">Social Media</div>
+          <div class="port-name">Restaurant Promotions</div>
+        </div>
+      </div>
+    </div>
+    <div class="port-item" data-cat="brand">
+      <div class="port-bg"></div>
+      <div class="port-deco">
+        <div style="font-family:'Bebas Neue',cursive;font-size:36px;color:rgba(255,255,255,0.12);text-align:center;">LOGO<br>DESIGN<br>IDENTITY</div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-info">
+          <div class="port-cat">Brand Identity</div>
+          <div class="port-name">Startup Logo Suite</div>
+        </div>
+      </div>
+    </div>
+    <div class="port-item" data-cat="sports">
+      <div class="port-bg"></div>
+      <div class="port-deco">
+        <div class="port-shape" style="border-radius:50%;width:80px;height:80px;">⚽</div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-info">
+          <div class="port-cat">Sports</div>
+          <div class="port-name">Football League Card</div>
+        </div>
+      </div>
+    </div>
+    <div class="port-item" data-cat="poster">
+      <div class="port-bg"></div>
+      <div class="port-deco">
+        <div style="font-family:'Bebas Neue',cursive;font-size:44px;color:rgba(255,255,255,0.1);">EVENT<br>NIGHT</div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-info">
+          <div class="port-cat">Event Poster</div>
+          <div class="port-name">Cultural Night 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 48px; text-align:center; border-top: 1px solid var(--border); margin-top:1px;">
+    <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">Like what you see? Let's create something amazing together.</p>
+    <button class="btn-primary" onclick="showPage('offers')">View Packages & Pricing →</button>
+  </div>
+
+  <footer>
+    <div class="footer-logo"><span>MS</span> GRAPHIC</div>
+    <div class="footer-copy">© 2026 MS Graphic. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ══════════ OFFERS PAGE ══════════ -->
+<div id="page-offers" class="page">
+  <div class="offers-hero">
+    <div class="offers-eyebrow"><span class="pulse-dot"></span> Limited Time — Ends Soon</div>
+    <h1 class="offers-title">Special<br><span class="red">Offer</span><br>Packages</h1>
+    <p class="offers-sub">Professional graphic design at unbeatable prices. Pick your package and get your project started today.</p>
+
+    <div class="countdown-wrap">
+      <div class="cd-unit">
+        <span class="cd-num" id="cd-days">07</span>
+        <span class="cd-label">Days</span>
+      </div>
+      <div class="cd-unit">
+        <span class="cd-num" id="cd-hours">14</span>
+        <span class="cd-label">Hours</span>
+      </div>
+      <div class="cd-unit">
+        <span class="cd-num" id="cd-mins">32</span>
+        <span class="cd-label">Mins</span>
+      </div>
+      <div class="cd-unit">
+        <span class="cd-num" id="cd-secs">00</span>
+        <span class="cd-label">Secs</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="offers-grid">
+    <!-- Basic -->
+    <div class="offer-card">
+      <div class="offer-badge badge-value">Starter</div>
+      <div class="offer-name">Basic Pack</div>
+      <div class="offer-price-wrap">
+        <span class="offer-currency">Rs.</span>
+        <span class="offer-price">1500</span>
+      </div>
+      <div class="offer-save" style="margin-bottom:24px;">Save Rs. 500 this week</div>
+      <ul class="offer-features">
+        <li><span class="check">✓</span> 1 design (poster / flyer)</li>
+        <li><span class="check">✓</span> 2 revision rounds</li>
+        <li><span class="check">✓</span> High-res print file</li>
+        <li><span class="check">✓</span> 48-hour delivery</li>
+        <li><span class="check" style="border-color:var(--border);color:var(--muted);">–</span> <span style="color:var(--muted)">Source file included</span></li>
+        <li><span class="check" style="border-color:var(--border);color:var(--muted);">–</span> <span style="color:var(--muted)">Social media resize</span></li>
+      </ul>
+      <button class="offer-btn offer-btn-outline" onclick="callUs()">Get Started →</button>
+    </div>
+
+    <!-- Featured -->
+    <div class="offer-card featured">
+      <div class="offer-badge badge-popular">★ Most Popular</div>
+      <div class="offer-name">Pro Pack</div>
+      <div class="offer-price-wrap">
+        <span class="offer-old">Rs. 5000</span>
+        <span class="offer-currency">Rs.</span>
+        <span class="offer-price">3000</span>
+      </div>
+      <div class="offer-save" style="margin-bottom:24px;">Save Rs. 2000 — 40% off!</div>
+      <ul class="offer-features">
+        <li><span class="check">✓</span> 3 designs (any type)</li>
+        <li><span class="check">✓</span> Unlimited revisions</li>
+        <li><span class="check">✓</span> High-res print files</li>
+        <li><span class="check">✓</span> 24-hour delivery</li>
+        <li><span class="check">✓</span> Source files (PSD/AI)</li>
+        <li><span class="check">✓</span> Social media resizes</li>
+      </ul>
+      <button class="offer-btn offer-btn-gold" onclick="callUs()">Claim This Deal →</button>
+    </div>
+
+    <!-- Bundle -->
+    <div class="offer-card">
+      <div class="offer-badge badge-hot">🔥 Best Value</div>
+      <div class="offer-name">Bundle Pack</div>
+      <div class="offer-price-wrap">
+        <span class="offer-old">Rs. 10000</span>
+        <span class="offer-currency">Rs.</span>
+        <span class="offer-price">6000</span>
+      </div>
+      <div class="offer-save" style="margin-bottom:24px;">Save Rs. 4000 — 60% off!</div>
+      <ul class="offer-features">
+        <li><span class="check">✓</span> 8 designs (any type)</li>
+        <li><span class="check">✓</span> Unlimited revisions</li>
+        <li><span class="check">✓</span> All print + digital files</li>
+        <li><span class="check">✓</span> Same-day delivery</li>
+        <li><span class="check">✓</span> All source files</li>
+        <li><span class="check">✓</span> Full social media pack</li>
+      </ul>
+      <button class="offer-btn offer-btn-outline" onclick="callUs()">Get Started →</button>
+    </div>
+  </div>
+
+  <!-- Guarantee -->
+  <div class="guarantee-strip">
+    <div class="guarantee-item">
+      <div class="g-icon">⚡</div>
+      <div>
+        <div class="g-label">Fast Delivery</div>
+        <div class="g-sub">As fast as same-day</div>
+      </div>
+    </div>
+    <div class="guarantee-item">
+      <div class="g-icon">♻</div>
+      <div>
+        <div class="g-label">Free Revisions</div>
+        <div class="g-sub">Until you love it</div>
+      </div>
+    </div>
+    <div class="guarantee-item">
+      <div class="g-icon">🏅</div>
+      <div>
+        <div class="g-label">Pro Quality</div>
+        <div class="g-sub">Print & digital ready</div>
+      </div>
+    </div>
+    <div class="guarantee-item">
+      <div class="g-icon">📞</div>
+      <div>
+        <div class="g-label">Direct Support</div>
+        <div class="g-sub">WhatsApp & phone</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact CTA -->
+  <div class="contact-cta">
+    <div class="cta-text">
+      <h2>Call Us to <span>Order Now</span></h2>
+      <p>WhatsApp or call — we respond fast.</p>
+    </div>
+    <div>
+      <div class="cta-phone">070 285 6831</div>
+      <div class="cta-phone-sub" style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted);margin-top:4px;">0741 557 952</div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo"><span>MS</span> GRAPHIC</div>
+    <div class="footer-copy">© 2026 MS Graphic. All rights reserved.</div>
+  </footer>
+</div>
+
+<script>
+// Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+function animRing() { rx += (mx-rx)*0.12; ry += (my-ry)*0.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animRing); }
+animRing();
+
+// Page switching
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('nav-'+id)?.classList.add('active');
+  window.scrollTo(0,0);
+  return false;
+}
+
+// Portfolio filter
+function filterPort(btn, cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.port-item').forEach(item => {
+    const cats = item.dataset.cat || '';
+    item.style.display = (cat === 'all' || cats.includes(cat)) ? '' : 'none';
+  });
+}
+
+// Countdown
+const end = new Date(Date.now() + 7*24*60*60*1000 + 14*60*60*1000 + 32*60*1000);
+function tick() {
+  const diff = end - Date.now();
+  if (diff <= 0) return;
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor((diff%86400000)/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+  document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+  document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+}
+tick(); setInterval(tick, 1000);
+
+function callUs() {
+  alert('📞 Call or WhatsApp:\n\n070 285 6831\n0741 557 952\n\nWe\'ll get back to you fast!');
+}
+</script>
+</body>
+</html>
