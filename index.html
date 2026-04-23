@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Plan Tracker</title>
+    <meta name="description" content="Track your 90-day bulk meal plan daily with progress tracking and countdown.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ① LOGIN SCREEN -->
+    <div id="login-overlay">
+        <div class="login-card">
+            <div class="login-logo">💪</div>
+            <h1>Bulk Plan</h1>
+            <p>90-Day Journey Tracker</p>
+            <div class="input-group">
+                <label for="email">Your Gmail Address</label>
+                <input type="email" id="email" placeholder="example@gmail.com" autocomplete="email">
+            </div>
+            <p id="login-error" class="login-error"></p>
+            <button class="login-btn" onclick="handleLogin()">Login →</button>
+            <div class="login-hint">No password required • Just your Gmail to identify you</div>
+        </div>
+    </div>
+
+    <!-- ② START SCREEN -->
+    <div id="start-screen" class="fullscreen-center hidden">
+        <div class="start-card">
+            <div class="start-badge">🏋️</div>
+            <h2>Ready to Begin?</h2>
+            <p class="start-sub">Your 90-day bulk plan will start from today.<br>Click <strong>START</strong> to kick off your journey!</p>
+            <div class="start-info-grid">
+                <div class="start-info-item"><span class="start-info-icon">🔥</span><span class="start-info-label" id="start-kcal-label">2400–2600 kcal/day</span></div>
+                <div class="start-info-item"><span class="start-info-icon">💪</span><span class="start-info-label" id="start-protein-label">~70g Protein/day</span></div>
+                <div class="start-info-item"><span class="start-info-icon">📅</span><span class="start-info-label">90 Days Total</span></div>
+                <div class="start-info-item"><span class="start-info-icon">🍽️</span><span class="start-info-label" id="start-meals-label">7 Meals/day</span></div>
+            </div>
+            <button class="start-btn" onclick="startPlan()">🚀 START BULK PLAN</button>
+            <div class="login-hint" style="margin-top:1rem;">Logged in as: <span id="logged-email" style="color:#818cf8"></span></div>
+        </div>
+    </div>
+
+    <!-- ③ MAIN APP (with tabs) -->
+    <div id="main-app" class="hidden">
+
+        <!-- Tab Navigation -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" id="tab-home-btn" onclick="switchTab('home')">
+                <span class="tab-icon">🏠</span>
+                <span class="tab-label">Home</span>
+            </button>
+            <button class="tab-btn" id="tab-settings-btn" onclick="switchTab('settings')">
+                <span class="tab-icon">⚙️</span>
+                <span class="tab-label">Settings</span>
+            </button>
+        </nav>
+
+        <!-- HOME TAB -->
+        <div id="tab-home" class="tab-content active-tab">
+            <div class="page-wrap">
+                <header>
+                    <div class="date-info" id="current-date">APRIL 23, 2026</div>
+                    <div class="user-greeting" id="user-greeting">Hello, Champ 👋</div>
+                    <h2>Daily Bulk Plan</h2>
+                    <div class="countdown" id="days-left">Day 1 of 90 • 89 Days Remaining</div>
+                </header>
+
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-value" id="stat-kcal">2400–2600</span>
+                        <span class="stat-label">Daily Kcal</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="stat-protein">~70g</span>
+                        <span class="stat-label">Protein</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="progress-text">0/7</span>
+                        <span class="stat-label">Meals Done</span>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    Tap <span class="tick-label">✓</span> when done &nbsp;|&nbsp; Tap <span class="cross-label">✗</span> if missed
+                </div>
+
+                <div class="meal-list" id="meal-container"></div>
+
+                <div id="status-message">
+                    <span class="status-icon" id="status-icon"></span>
+                    <div class="status-title" id="status-title"></div>
+                    <div class="status-desc" id="status-desc"></div>
+                </div>
+
+                <!-- Day Complete Banner (shown when all meals done today) -->
+                <div id="day-complete-banner" class="day-complete-banner hidden">
+                    <div class="dcb-stars">⭐⭐⭐</div>
+                    <div class="dcb-title">Day Complete! 🎉</div>
+                    <div class="dcb-sub" id="dcb-sub">You finished Day 1! Come back tomorrow to continue.</div>
+                    <div class="dcb-next" id="dcb-next">➡ Next: Day 2</div>
+                </div>
+
+                <div class="reset-zone">
+                    <button class="reset-btn" onclick="confirmReset()">🔄 Reset Plan</button>
+                    <p class="reset-hint">Clears all progress and restarts the 90-day countdown.</p>
+                </div>
+
+                <footer class="app-footer" id="app-footer">3-Month Bulk Plan</footer>
+            </div>
+        </div>
+
+        <!-- SETTINGS TAB -->
+        <div id="tab-settings" class="tab-content">
+            <div class="page-wrap">
+                <div class="settings-header">
+                    <h2>⚙️ Settings</h2>
+                    <p>Customize your bulk plan targets and meals</p>
+                </div>
+
+                <!-- Profile -->
+                <div class="settings-section">
+                    <div class="settings-section-title">👤 Profile</div>
+                    <div class="setting-row">
+                        <label class="setting-label">Your Name</label>
+                        <input type="text" id="setting-name" class="setting-input" placeholder="Enter your name">
+                    </div>
+                </div>
+
+                <!-- Targets -->
+                <div class="settings-section">
+                    <div class="settings-section-title">🎯 Daily Targets</div>
+                    <div class="setting-row">
+                        <label class="setting-label">Calorie Target</label>
+                        <input type="text" id="setting-kcal" class="setting-input" placeholder="e.g. 2400–2600">
+                    </div>
+                    <div class="setting-row">
+                        <label class="setting-label">Protein Target</label>
+                        <input type="text" id="setting-protein" class="setting-input" placeholder="e.g. ~70g">
+                    </div>
+                </div>
+
+                <!-- Meal Editor -->
+                <div class="settings-section">
+                    <div class="settings-section-title">🍽️ Meal Plan
+                        <button class="add-meal-btn" onclick="addMealField()">+ Add Meal</button>
+                    </div>
+                    <div id="meal-editor-list"></div>
+                </div>
+
+                <button class="save-settings-btn" onclick="saveSettings()">💾 Save Settings</button>
+                <p id="settings-saved-msg" class="settings-saved-msg"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Confirm Modal -->
+    <div id="reset-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-icon">⚠️</div>
+            <h3>Reset Bulk Plan?</h3>
+            <p>This will delete <strong>all progress</strong> and restart the 90-day countdown from today.</p>
+            <div class="modal-actions">
+                <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+                <button class="modal-confirm" onclick="resetPlan()">Yes, Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 90-Day Completion Celebration -->
+    <div id="plan-complete-screen" class="plan-complete-screen hidden">
+        <div class="confetti-wrap" id="confetti-wrap"></div>
+        <div class="complete-card">
+            <div class="complete-trophy">🏆</div>
+            <h1 class="complete-title">GOOD JOB!</h1>
+            <h2 class="complete-subtitle">WELL DONE!</h2>
+            <p class="complete-msg" id="complete-msg">You completed the full 90-day Bulk Plan! You're an absolute beast! 💪🔥</p>
+            <div class="complete-stars">⭐ ⭐ ⭐ ⭐ ⭐</div>
+            <div class="complete-stats">
+                <div class="cs-item"><span class="cs-val">90</span><span class="cs-lab">Days Done</span></div>
+                <div class="cs-item"><span class="cs-val">630</span><span class="cs-lab">Meals Tracked</span></div>
+                <div class="cs-item"><span class="cs-val">3</span><span class="cs-lab">Months Strong</span></div>
+            </div>
+            <button class="reset-btn" style="margin-top:2rem;" onclick="confirmReset()">🔄 Start New Plan</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
